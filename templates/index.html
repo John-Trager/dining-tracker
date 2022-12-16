@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plate Count!!!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Users</h1>
+    <ul>
+        <h1>Hello</h1>
+        {% for user in users %}
+            <li><b>{{ user[user_params.index('name')] }}</b>
+            <form action="/delete" method="post">
+                <input type="hidden" name="user" value="{{ user }}">
+                <input type="submit" value="Delete">
+            </form>
+                {% for param in user_params[2:] %}
+                    <div>
+                        <i># {{ param }}: {{ user[user_params.index(param)] }}</i>
+                        <form action="/modify" method="post">
+                            <input type="hidden" name="user" value="{{ user }}">
+                            <input type="hidden" name="param" value="{{ param }}">
+                            <input type="hidden" name="change" value="1">
+                            <input type="submit" value="{{ param }} +1">
+                        </form>
+                        <form action="/modify" method="post">
+                            <input type="hidden" name="user" value="{{ user }}">
+                            <input type="hidden" name="param" value="{{ param }}">
+                            <input type="hidden" name="change" value="-1">
+                            <input type="submit" value="{{ param }} -1">
+                        </form>
+                    </div>
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add a User</h2>
+    <form action="/add" method="post">
+        <input type="text" name="name" placeholder="Enter your name">
+        <input type="submit" value="Add">
+    </form>
+</body>
+</html>
